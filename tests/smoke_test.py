@@ -64,7 +64,7 @@ def test_seed(tmp):
     r = subprocess.run(
         [PY, os.path.join(SCRIPTS, "seed.py"), "--data-dir", data_dir,
          "--manifest-out", manifest, "--scenario", "guest-with-tasks"],
-        capture_output=True, text=True)
+        capture_output=True, text=True, encoding="utf-8", errors="replace")
     assert r.returncode == 0, "seed 应成功: " + r.stderr
     with open(manifest, "r", encoding="utf-8") as fh:
         m = json.load(fh)
@@ -118,7 +118,7 @@ def test_capture_and_verify(tmp, manifest_path):
             [PY, os.path.join(SCRIPTS, "capture_window.py"),
              "--session", session, "--manifest", manifest_path,
              "--out-dir", shot_dir, "--result-out", capture, "--tolerance", "1"],
-            capture_output=True, text=True)
+            capture_output=True, text=True, encoding="utf-8", errors="replace")
         assert r.returncode == 0, "capture 应成功: " + r.stderr
         with open(capture, "r", encoding="utf-8") as fh:
             cap = json.load(fh)
@@ -135,7 +135,7 @@ def test_capture_and_verify(tmp, manifest_path):
             [PY, os.path.join(SCRIPTS, "verify_artifacts.py"),
              "--manifest", manifest_path, "--eval-report", report,
              "--capture", capture, "--artifact-manifest-out", am],
-            capture_output=True, text=True, encoding="utf-8")
+            capture_output=True, text=True, encoding="utf-8", errors="replace")
         assert r2.returncode == 0, "verify 应 verified: " + r2.stderr
         with open(am, "r", encoding="utf-8") as fh:
             amj = json.load(fh)
@@ -165,7 +165,7 @@ def test_verify_unverified(tmp, manifest_path):
         [PY, os.path.join(SCRIPTS, "verify_artifacts.py"),
          "--manifest", manifest_path, "--eval-report", report,
          "--capture", cap_path, "--artifact-manifest-out", am],
-        capture_output=True, text=True, encoding="utf-8")
+        capture_output=True, text=True, encoding="utf-8", errors="replace")
     assert r.returncode == 2, "尺寸不符应 unverified(rc=2): " + r.stdout
     print("[ok] verify 尺寸不符 → unverified(rc=2)")
 
