@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.log
+run/
+user_data/
+mock_data/
+shots/
+*.png
+venv/
+.venv/
+.DS_Store
